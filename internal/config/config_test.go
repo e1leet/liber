@@ -25,6 +25,14 @@ func TestNew(t *testing.T) {
 				ShutdownTimeout: 10 * time.Second,
 			},
 			Log: LogConfig{Level: "info"},
+			CORS: CORSConfig{
+				AllowedOrigins:   []string{"http://localhost:8000"},
+				AllowedMethods:   []string{"GET"},
+				AllowedHeaders:   []string{"Accept"},
+				ExposedHeaders:   []string{"Link"},
+				AllowCredentials: true,
+				MaxAge:           300,
+			},
 		}
 
 		actual, err := New(testdataFolder + "config.env")
