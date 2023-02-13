@@ -6,9 +6,11 @@ import (
 	"net/http"
 
 	"github.com/e1leet/liber/internal/config"
+	"github.com/e1leet/liber/internal/transport/middleware"
 	"github.com/e1leet/liber/pkg/errors"
 	"github.com/e1leet/liber/pkg/shutdown"
 	"github.com/go-chi/chi/v5"
+	chiMiddleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	"github.com/rs/zerolog"
 	httpSwagger "github.com/swaggo/http-swagger"
@@ -49,6 +51,9 @@ func (a *App) Run(ctx context.Context) error {
 		MaxAge:           a.cfg.CORS.MaxAge,
 		AllowCredentials: a.cfg.CORS.AllowCredentials,
 	}))
+
+	a.router.Use(chiMiddleware.AllowContentType("application/json"))
+	a.router.Use(middleware.LoggerMiddleware(a.logger))
 
 	a.logger.Info().Msg("configure controllers")
 
