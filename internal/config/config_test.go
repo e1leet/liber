@@ -24,6 +24,7 @@ func TestNew(t *testing.T) {
 				Port:            8000,
 				ShutdownTimeout: 10 * time.Second,
 			},
+			Log: LogConfig{Level: "info"},
 		}
 
 		actual, err := New(testdataFolder + "config.env")

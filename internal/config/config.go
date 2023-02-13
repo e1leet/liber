@@ -14,8 +14,13 @@ type ServerConfig struct {
 	ShutdownTimeout time.Duration `env:"SHUTDOWN_TIMEOUT" env-required:"" env-description:"graceful shutdown timeout"`
 }
 
+type LogConfig struct {
+	Level string `env:"LEVEL" env-required:"" env-description:"log level"`
+}
+
 type Config struct {
 	Server ServerConfig `env-prefix:"SERVER_"`
+	Log    LogConfig    `env-prefix:"LOG_"`
 }
 
 func New(path string) (*Config, error) {
