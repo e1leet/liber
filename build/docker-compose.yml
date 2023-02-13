@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: build/Dockerfile
+    env_file:
+      - ../configs/config.local.env
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
