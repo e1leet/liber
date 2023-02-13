@@ -9,6 +9,7 @@ import (
 	"github.com/e1leet/liber/pkg/errors"
 	"github.com/e1leet/liber/pkg/shutdown"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 	"github.com/rs/zerolog"
 	httpSwagger "github.com/swaggo/http-swagger"
 )
@@ -38,6 +39,16 @@ func (a *App) Run(ctx context.Context) error {
 	}
 
 	a.logger.Info().Msg("configure middlewares")
+
+	a.logger.Debug().Msg("configure CORS")
+	a.router.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   a.cfg.CORS.AllowedOrigins,
+		AllowedMethods:   a.cfg.CORS.AllowedMethods,
+		AllowedHeaders:   a.cfg.CORS.AllowedHeaders,
+		ExposedHeaders:   a.cfg.CORS.ExposedHeaders,
+		MaxAge:           a.cfg.CORS.MaxAge,
+		AllowCredentials: a.cfg.CORS.AllowCredentials,
+	}))
 
 	a.logger.Info().Msg("configure controllers")
 

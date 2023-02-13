@@ -18,9 +18,19 @@ type LogConfig struct {
 	Level string `env:"LEVEL" env-required:"" env-description:"log level"`
 }
 
+type CORSConfig struct {
+	AllowedOrigins   []string `env:"ALLOWED_ORIGINS" env-default:"" env-description:"CORS allowed origins"`
+	AllowedMethods   []string `env:"ALLOWED_METHODS" env-default:"" env-description:"CORS allowed method"`
+	AllowedHeaders   []string `env:"ALLOWED_HEADERS" env-default:"" env-description:"CORS allowed headers"`
+	ExposedHeaders   []string `env:"EXPOSED_HEADERS" env-default:"" env-description:"CORS exposed origins"`
+	AllowCredentials bool     `env:"ALLOW_CREDENTIALS" env-default:"false" env-description:"CORS allow credentials"`
+	MaxAge           int      `env:"MAX_AGE" env-default:"5" env-description:"CORS request cache max age"`
+}
+
 type Config struct {
 	Server ServerConfig `env-prefix:"SERVER_"`
 	Log    LogConfig    `env-prefix:"LOG_"`
+	CORS   CORSConfig   `env-prefix:"CORS_"`
 }
 
 func New(path string) (*Config, error) {
