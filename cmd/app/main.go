@@ -9,7 +9,23 @@ import (
 	"github.com/e1leet/liber/internal/config"
 	"github.com/e1leet/liber/internal/utils/common"
 	"github.com/rs/zerolog/log"
+
+	_ "github.com/e1leet/liber/docs"
 )
+
+//	@title			Liber
+//	@version		0.0.0
+//	@description	Liber API documentation
+
+//	@contact.name	Damir mirasov
+//	@contact.url	https://github.com/e1leet
+//	@contact.email	damirmirasovmain@gmail.com
+
+//	@license.name	MIT
+//	@license.url	https://opensource.org/license/mit-0/
+
+//	@host		localhost:8000
+//	@BasePath	/api
 
 func main() {
 	cfgPath := common.ConfigPath()

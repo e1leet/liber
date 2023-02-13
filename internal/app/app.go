@@ -10,6 +10,7 @@ import (
 	"github.com/e1leet/liber/pkg/shutdown"
 	"github.com/go-chi/chi/v5"
 	"github.com/rs/zerolog"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 type App struct {
@@ -39,6 +40,12 @@ func (a *App) Run(ctx context.Context) error {
 	a.logger.Info().Msg("configure middlewares")
 
 	a.logger.Info().Msg("configure controllers")
+
+	a.logger.Debug().Msg("configure swagger controller")
+	a.router.Get("/swagger/*", httpSwagger.WrapHandler)
+	a.router.Get("/swagger", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/swagger/index.html", http.StatusMovedPermanently)
+	})
 
 	a.logger.Info().Msg("configure closer")
 	a.closer.Add(srv.Shutdown)

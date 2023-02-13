@@ -1,0 +1,20 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Liber API documentation",
+        "title": "Liber",
+        "contact": {
+            "name": "Damir mirasov",
+            "url": "https://github.com/e1leet",
+            "email": "damirmirasovmain@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/license/mit-0/"
+        },
+        "version": "0.0.0"
+    },
+    "host": "localhost:8000",
+    "basePath": "/api",
+    "paths": {}
+}

@@ -1,0 +1,15 @@
+basePath: /api
+host: localhost:8000
+info:
+  contact:
+    email: damirmirasovmain@gmail.com
+    name: Damir mirasov
+    url: https://github.com/e1leet
+  description: Liber API documentation
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit-0/
+  title: Liber
+  version: 0.0.0
+paths: {}
+swagger: "2.0"
