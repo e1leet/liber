@@ -10,6 +10,6 @@ info:
     name: MIT
     url: https://opensource.org/license/mit-0/
   title: Liber
-  version: 0.0.0
+  version: 0.1.0
 paths: {}
 swagger: "2.0"

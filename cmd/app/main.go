@@ -14,7 +14,7 @@ import (
 )
 
 //	@title			Liber
-//	@version		0.0.0
+//	@version		0.1.0
 //	@description	Liber API documentation
 
 //	@contact.name	Damir mirasov
