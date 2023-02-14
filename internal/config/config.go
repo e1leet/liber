@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -27,10 +28,33 @@ type CORSConfig struct {
 	MaxAge           int      `env:"MAX_AGE" env-default:"5" env-description:"CORS request cache max age"`
 }
 
+type PostgresConfig struct {
+	Username    string        `env:"USERNAME" env-required:"" env-description:"postgres username"`
+	Password    string        `env:"PASSWORD" env-required:"" env-description:"postgres password"`
+	Host        string        `env:"HOST" env-required:"" env-description:"postgres host"`
+	Port        int           `env:"PORT" env-required:"" env-description:"postgres port"`
+	Database    string        `env:"DATABASE" env-required:"" env-description:"postgres database"`
+	SSLMode     string        `env:"SSL_MODE" env-required:"" env-description:"postgres ssl mode"`
+	PingTimeout time.Duration `env:"PING_TIMEOUT" env-required:"" env-description:"postgres ping timeout"`
+}
+
+func (c PostgresConfig) URI() string {
+	return fmt.Sprintf(
+		"postgresql://%s:%s@%s:%d/%s?sslmode=%s",
+		c.Username,
+		c.Password,
+		c.Host,
+		c.Port,
+		c.Database,
+		c.SSLMode,
+	)
+}
+
 type Config struct {
-	Server ServerConfig `env-prefix:"SERVER_"`
-	Log    LogConfig    `env-prefix:"LOG_"`
-	CORS   CORSConfig   `env-prefix:"CORS_"`
+	Server   ServerConfig   `env-prefix:"SERVER_"`
+	Log      LogConfig      `env-prefix:"LOG_"`
+	CORS     CORSConfig     `env-prefix:"CORS_"`
+	Postgres PostgresConfig `env-prefix:"POSTGRES_"`
 }
 
 func New(path string) (*Config, error) {
