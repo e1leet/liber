@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"testing"
 	"time"
@@ -33,6 +34,15 @@ func TestNew(t *testing.T) {
 				AllowCredentials: true,
 				MaxAge:           300,
 			},
+			Postgres: PostgresConfig{
+				Username:    "postgres",
+				Password:    "postgres",
+				Host:        "localhost",
+				Port:        5432,
+				Database:    "postgres",
+				SSLMode:     "disable",
+				PingTimeout: time.Second * 5,
+			},
 		}
 
 		actual, err := New(testdataFolder + "config.env")
@@ -40,4 +50,27 @@ func TestNew(t *testing.T) {
 
 		assert.EqualValues(t, expected, actual)
 	})
+}
+
+func TestPostgresConfig_URI(t *testing.T) {
+	cfg := PostgresConfig{
+		Username:    "postgres",
+		Password:    "postgres",
+		Host:        "postgres",
+		Port:        5432,
+		Database:    "postgres",
+		SSLMode:     "disable",
+		PingTimeout: time.Second * 5,
+	}
+
+	expected := fmt.Sprintf(
+		"postgresql://%s:%s@%s:%d/%s?sslmode=%s",
+		cfg.Username,
+		cfg.Password,
+		cfg.Host,
+		cfg.Port,
+		cfg.Database,
+		cfg.SSLMode,
+	)
+	assert.Equal(t, expected, cfg.URI())
 }

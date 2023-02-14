@@ -7,6 +7,7 @@ import (
 
 	"github.com/e1leet/liber/internal/config"
 	"github.com/e1leet/liber/internal/transport/middleware"
+	"github.com/e1leet/liber/pkg/client/postgresql"
 	"github.com/e1leet/liber/pkg/errors"
 	"github.com/e1leet/liber/pkg/shutdown"
 	"github.com/go-chi/chi/v5"
@@ -34,6 +35,14 @@ func New(cfg *config.Config, logger zerolog.Logger) *App {
 
 func (a *App) Run(ctx context.Context) error {
 	a.logger.Info().Msg("configure dependencies")
+
+	a.logger.Debug().Msg("connect to postgresql")
+
+	postgresClient, err := postgresql.NewClient(ctx, a.cfg.Postgres.URI(), a.cfg.Postgres.PingTimeout)
+	if err != nil {
+		a.logger.Error().Err(err).Send()
+		return err
+	}
 
 	srv := http.Server{
 		Addr:    fmt.Sprintf("%s:%d", a.cfg.Server.Host, a.cfg.Server.Port),
@@ -65,6 +74,10 @@ func (a *App) Run(ctx context.Context) error {
 
 	a.logger.Info().Msg("configure closer")
 	a.closer.Add(srv.Shutdown)
+	a.closer.Add(func(ctx context.Context) error {
+		postgresClient.Close()
+		return nil
+	})
 
 	// Run server
 	go func() {
