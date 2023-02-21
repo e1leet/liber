@@ -24,6 +24,17 @@ type Storage struct {
 	UpdatedAt time.Time
 }
 
+func (s *Storage) ToDomain() *User {
+	return &User{
+		ID:        s.ID,
+		Email:     s.Email,
+		Username:  s.Username,
+		Password:  s.Password,
+		CreatedAt: s.CreatedAt,
+		UpdatedAt: s.UpdatedAt,
+	}
+}
+
 func NewCreateMapper(email string, username string, password string) map[string]interface{} {
 	return map[string]interface{}{
 		EmailField:    email,
