@@ -24,7 +24,7 @@ func TestMemory_UserByUsername(t *testing.T) {
 	t.Run("user_not_found", func(t *testing.T) {
 		repository := New(log.Logger)
 
-		_, err := repository.UserByEmail(ctx, "test@test.com")
+		_, err := repository.UserByUsername(ctx, "test")
 		require.ErrorIs(t, err, errors.ErrUserNotFound)
 	})
 
