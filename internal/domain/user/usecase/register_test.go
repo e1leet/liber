@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"io"
 	"testing"
 	"time"
 
@@ -12,6 +13,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+func init() {
+	log.Logger = log.Output(io.Discard)
+}
 
 func TestUsecase_Register(t *testing.T) {
 	var (
