@@ -8,7 +8,7 @@ type Usecase struct {
 	passwordManager passwordManager
 }
 
-func New(repository userRepository, logger zerolog.Logger, manager passwordManager) *Usecase {
+func New(repository userRepository, manager passwordManager, logger zerolog.Logger) *Usecase {
 	return &Usecase{
 		userRepository:  repository,
 		logger:          logger,

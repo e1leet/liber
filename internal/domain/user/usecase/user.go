@@ -8,8 +8,7 @@ import (
 	"github.com/e1leet/liber/pkg/errors"
 )
 
-// TODO: Write unit test
-func (u *Usecase) User(ctx context.Context, id int) (usr *model.User, err error) {
+func (u *Usecase) User(ctx context.Context, id int) (user *model.User, err error) {
 	defer func() { err = errors.WrapIfErr(err, "failed to get user") }()
 
 	storage, err := u.userRepository.UserByID(ctx, id)

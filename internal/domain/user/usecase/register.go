@@ -8,15 +8,14 @@ import (
 	"github.com/e1leet/liber/pkg/errors"
 )
 
-// TODO: Write unit test
-func (u *Usecase) Register(ctx context.Context, dto model.RegisterDTO) (usr *model.User, err error) {
+func (u *Usecase) Register(ctx context.Context, dto model.RegisterDTO) (user *model.User, err error) {
 	defer func() { err = errors.WrapIfErr(err, "failed to register") }()
 
 	u.logger.Info().Str("username", dto.Username).Send()
 
 	m := model.NewCreateMapper(
-		usr.Email,
-		usr.Password,
+		dto.Email,
+		dto.Password,
 		u.passwordManager.Hash(dto.Password),
 	)
 
