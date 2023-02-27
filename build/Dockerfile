@@ -9,6 +9,6 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o ./bin/todo ./cmd/app/main.go
+RUN go build -o ./bin/liber ./cmd/app/main.go
 
 CMD ["./bin/liber"]
